@@ -30,17 +30,17 @@ class Player:
                     print("You have entered an invalid amount.")
                 elif bet > self.balance:
                     print("You have insufficient funds.")
+                else:
+                    self.balance -= bet
+                    return bet
             except:
                 print("You have entered an invalid number.")
-            self.balance -= bet
-            return bet
 
-    def play_again(self):
-        if self.winnings == 0:
-            again = input("Would you like to play again? (Y/N)")
-            while True:
-                if again.upper() == "Y":
-                    return True
-                elif again.upper() == "N":
-                    return False
-        return True
+    def add_winnings(self, winnings):
+        self.winnings += winnings
+
+    def display_balance(self):
+        print(f"Your balance is {self.balance}")
+
+    def return_balance(self):
+        return self.balance

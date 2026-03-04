@@ -12,3 +12,4 @@ class Game:
             won = self.deposit*2
         self.deposit = 0
         return won
+
