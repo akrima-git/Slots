@@ -2,42 +2,23 @@ import Player as p
 import Game as g
 
 
-def playGame(player):
-    while True:
-        try:
-            entry = int(input("How much money would you like to bet? "))
-            break
-        except:
-            print("Invalid number entered. Please enter a whole number.")
-    player.balance -= entry
+def play_game(player):
+    entry = player.place_bet()
     game = g.Game(entry)
     player.winnings = game.play()
 
     return player.winnings
 
-def play():
-    again = input("Would you like to play again? (Y/N)")
-    while True:
-        if again.upper() == "Y":
-            return True
-        elif again.upper() == "N":
-            return False
-
 def main():
 
     name = input("What is your name? ")
-    while True:
-        try:
-            balance = int(input("How much money would you like to deposit? "))
-            break
-        except:
-            print("Invalid number entered. Please enter a whole number.")
-    player1 = p.Player(name, balance)
+    player1 = p.Player(name)
+    player1.add_balance()
     again = True
     while again:
 
 
-        player1.winnings += playGame(player1)
+        player1.winnings += play_game(player1)
         print("Your current balance is: " + str(player1.balance))
 
         if player1.winnings > 0:
@@ -51,9 +32,12 @@ def main():
                     break
                 else:
                     continue
-        again = play()
+        again = player1.play_again()
+        if player1.balance == 0:
+            print("you are out of funds.")
+            break
 
-    print(player1.name, "ended with", str(player1.balance))
+    print(f"{player1.name} ended with ${str(player1.balance)}.")
 
 main()
 
